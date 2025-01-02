@@ -1,0 +1,30 @@
+version: ‘3.8’
+
+volumes:
+  mariadb-data:
+services:
+  app:
+    build:
+      context: .
+      dockerfile: Dockerfile # We will use the DockerFile inroot to build the app
+    env_file:
+      - .env # Loads the .env file to provide the environment varable
+    volumes:
+      - ../..:/workspaces:cached
+    command: sleep infinity
+    ports:
+      - 8080:8080
+    networks:
+      - app-network
+  db:
+    image: mariadb:latest # Use the latest mariaDB. You can also specify a version here
+    restart: unless-stopped
+    volumes:
+      - mariadb-data:/var/lib/mysql
+    env_file:
+      - .env # Loads the .env file to provide the environment varable
+    networks:
+      - app-network
+
+networks:
+  app-network:

@@ -1,0 +1,25 @@
+{
+    "name": "ezzykube-go-example",
+    // Specified we will use docker-compose.yml as the dev container.
+    "dockerComposeFile": "docker-compose.yml",
+    "service": "app",
+    "workspaceFolder": "/workspaces/${localWorkspaceFolderBasename}",
+    // We will expose 8080 to out localhost, so that we can access the API and inspect the DB using any DBMS client.
+    "forwardPorts": [
+      8080,
+    ],
+    "mounts": [
+      "source=${env:SSH_AUTH_SOCK},target=/ssh-agent,type=bind"
+    ],
+    "remoteEnv": {
+      "SSH_AUTH_SOCK": "/ssh-agent"
+    },
+    "customizations": {
+      "vscode": {
+      "extensions": [
+        "premparihar.gotestexplorer"
+        ]
+      }
+    }
+  }
+  
